@@ -74,6 +74,18 @@ unpack_zip (struct archive *a)
 
 
 /**
+ * Initializes the archive structure for unpacking 7z files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int unpack_7z(struct archive* a) {
+    archive_read_support_format_7zip(a);
+    return 0;
+}
+
+
+/**
  * The main function of the program.
  *
  * @param argc The number of command-line arguments.
@@ -108,6 +120,8 @@ main (int argc, char *argv[])
   else if (strcmp (ext, ".zip") == 0)
     {
       result = unpack_archive (filepath, unpack_zip);
+    } else if (strcmp(ext, ".7z") == 0) {
+        result = unpack_archive(filepath, unpack_7z);
     }
   else
     {
