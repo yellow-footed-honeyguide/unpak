@@ -11,6 +11,8 @@ unpak is a versatile file extraction tool that seamlessly handles multiple archi
 
 unpak effortlessly tackles rigth now:  
 - `.tar.gz`   
+- `.tar.bz2`   
+- `.tar.xz`   
 - `.zip`
 - `.7z` 
 
