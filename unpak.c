@@ -86,6 +86,58 @@ int unpack_7z(struct archive* a) {
 
 
 /**
+ * Initializes the archive structure for unpacking tar.bz2 files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int unpack_tarbz2(struct archive* a) {
+    archive_read_support_filter_bzip2(a);
+    archive_read_support_format_tar(a);
+    return 0;
+}
+
+/**
+ * Initializes the archive structure for unpacking tar.xz files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int unpack_tarxz(struct archive* a) {
+    archive_read_support_filter_xz(a);
+    archive_read_support_format_tar(a);
+    return 0;
+}
+
+/**
+ * Initializes the archive structure for unpacking xz files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int unpack_xz(struct archive* a) {
+    archive_read_support_filter_xz(a);
+    archive_read_support_format_raw(a);
+    return 0;
+}
+
+/**
+ * Initializes the archive structure for unpacking bz2 files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int unpack_bz2(struct archive* a) {
+    archive_read_support_filter_bzip2(a);
+    archive_read_support_format_raw(a);
+    return 0;
+}
+
+
+
+
+
+/**
  * The main function of the program.
  *
  * @param argc The number of command-line arguments.
@@ -110,23 +162,24 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  int result;
-
-  if (strcmp (ext, ".gz") == 0 || strcmp (ext, ".tar.gz") == 0
-      || strcmp (ext, ".tgz") == 0)
-    {
-      result = unpack_archive (filepath, unpack_targz);
-    }
-  else if (strcmp (ext, ".zip") == 0)
-    {
-      result = unpack_archive (filepath, unpack_zip);
+int result;
+    if (strcmp(ext, ".gz") == 0 || strcmp(ext, ".tar.gz") == 0 || strcmp(ext, ".tgz") == 0) {
+        result = unpack_archive(filepath, unpack_targz);
+    } else if (strcmp(ext, ".zip") == 0) {
+        result = unpack_archive(filepath, unpack_zip);
     } else if (strcmp(ext, ".7z") == 0) {
         result = unpack_archive(filepath, unpack_7z);
-    }
-  else
-    {
-      fprintf (stderr, "Error: Unsupported file extension\n");
-      return 1;
+    } else if (strcmp(ext, ".bz2") == 0 || strcmp(ext, ".tar.bz2") == 0 || strcmp(ext, ".tbz2") == 0) {
+        result = unpack_archive(filepath, unpack_tarbz2);
+    } else if (strcmp(ext, ".xz") == 0 || strcmp(ext, ".tar.xz") == 0 || strcmp(ext, ".txz") == 0) {
+        result = unpack_archive(filepath, unpack_tarxz);
+    } else if (strcmp(ext, ".bz2") == 0) {
+        result = unpack_archive(filepath, unpack_bz2);
+    } else if (strcmp(ext, ".xz") == 0) {
+        result = unpack_archive(filepath, unpack_xz);
+    } else {
+        fprintf(stderr, "Error: Unsupported file extension\n");
+        return 1;
     }
 
   return result;
