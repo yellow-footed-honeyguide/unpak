@@ -42,6 +42,8 @@ mkdir build
 cd build
 meson ..
 ninja
+or 
+sudo ninja install (if you want to add unpak to executable path)
 ```
 
 Optionally, you can install unpak system-wide:
