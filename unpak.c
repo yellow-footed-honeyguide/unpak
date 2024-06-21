@@ -3,7 +3,8 @@
 #include <string.h>
 #include <archive.h>
 #include <archive_entry.h>
-#include <lib_unpak.h>
+#include "handle_options.h"
+#include "lib_unpak.h"
 
 #define BUFFER_SIZE 8192
 
@@ -59,6 +60,9 @@ unpack_archive (const char *filepath, int (*unpack_func) (struct archive *))
 int
 main (int argc, char *argv[])
 {
+
+  handle_options (argc, argv);
+
   if (argc != 2)
     {
       fprintf (stderr, "Usage: %s <file_path>\n", argv[0]);
