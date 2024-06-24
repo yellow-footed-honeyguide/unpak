@@ -108,6 +108,12 @@ main (int argc, char *argv[])
     {
       result = unpack_archive (filepath, unpack_deb);
     }
+
+    else if (strcmp (ext, ".rpm") == 0)
+    {
+      result = unpack_rpm(argv[1], "./");
+    }
+
   else
     {
       fprintf (stderr, "Error: Unsupported file extension\n");
