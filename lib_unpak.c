@@ -33,9 +33,11 @@ unpack_zip (struct archive *a)
  * @param a The archive structure to initialize.
  * @return Always returns 0.
  */
-int unpack_7z(struct archive* a) {
-    archive_read_support_format_7zip(a);
-    return 0;
+int
+unpack_7z (struct archive *a)
+{
+  archive_read_support_format_7zip (a);
+  return 0;
 }
 
 
@@ -45,10 +47,12 @@ int unpack_7z(struct archive* a) {
  * @param a The archive structure to initialize.
  * @return Always returns 0.
  */
-int unpack_tarbz2(struct archive* a) {
-    archive_read_support_filter_bzip2(a);
-    archive_read_support_format_tar(a);
-    return 0;
+int
+unpack_tarbz2 (struct archive *a)
+{
+  archive_read_support_filter_bzip2 (a);
+  archive_read_support_format_tar (a);
+  return 0;
 }
 
 /**
@@ -57,10 +61,12 @@ int unpack_tarbz2(struct archive* a) {
  * @param a The archive structure to initialize.
  * @return Always returns 0.
  */
-int unpack_tarxz(struct archive* a) {
-    archive_read_support_filter_xz(a);
-    archive_read_support_format_tar(a);
-    return 0;
+int
+unpack_tarxz (struct archive *a)
+{
+  archive_read_support_filter_xz (a);
+  archive_read_support_format_tar (a);
+  return 0;
 }
 
 /**
@@ -69,10 +75,12 @@ int unpack_tarxz(struct archive* a) {
  * @param a The archive structure to initialize.
  * @return Always returns 0.
  */
-int unpack_xz(struct archive* a) {
-    archive_read_support_filter_xz(a);
-    archive_read_support_format_raw(a);
-    return 0;
+int
+unpack_xz (struct archive *a)
+{
+  archive_read_support_filter_xz (a);
+  archive_read_support_format_raw (a);
+  return 0;
 }
 
 /**
@@ -81,10 +89,26 @@ int unpack_xz(struct archive* a) {
  * @param a The archive structure to initialize.
  * @return Always returns 0.
  */
-int unpack_bz2(struct archive* a) {
-    archive_read_support_filter_bzip2(a);
-    archive_read_support_format_raw(a);
-    return 0;
+int
+unpack_bz2 (struct archive *a)
+{
+  archive_read_support_filter_bzip2 (a);
+  archive_read_support_format_raw (a);
+  return 0;
 }
 
-
+/**
+ * Initializes the archive structure for unpacking .deb files.
+ *
+ * @param a The archive structure to initialize.
+ * @return Always returns 0.
+ */
+int
+unpack_deb (struct archive *a)
+{
+  archive_read_support_format_ar (a);
+  archive_read_support_format_tar (a);
+  archive_read_support_filter_gzip (a);
+  archive_read_support_filter_xz (a);
+  return 0;
+}

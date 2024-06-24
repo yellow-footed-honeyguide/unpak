@@ -9,12 +9,19 @@ unpak is a versatile file extraction tool that seamlessly handles multiple archi
 ## Features
 🌋 Multi-Format Mastery 📦
 
-unpak effortlessly tackles rigth now:  
+The unpak can unpack files from the following archives:
 - `.tar.gz`   
 - `.tar.bz2`   
 - `.tar.xz`   
 - `.zip`
 - `.7z` 
+- `.deb` 
+
+The unpak can decompress:
+- `.gz`   
+- `.bz2`   
+- `.xz`   
+
 
 🌋 Command-Line Convenience ⌨️
 

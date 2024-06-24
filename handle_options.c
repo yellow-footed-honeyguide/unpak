@@ -5,7 +5,7 @@
 void
 print_version ()
 {
-  printf ("%s\n", "1.0.0");
+  printf ("%s\n", "1.1.0");
 }
 
 void
@@ -13,8 +13,7 @@ print_help ()
 {
   printf ("Usage: unpak [OPTIONS]\n");
   printf ("\n");
-  printf
-    ("Utility for unpacking any type of archive 📦\n");
+  printf ("Utility for unpacking any type of archive 📦\n");
   printf ("\n");
   printf ("Options:\n");
   printf ("  -v, --version    Print the version information and exit.\n");

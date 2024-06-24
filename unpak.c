@@ -78,24 +78,40 @@ main (int argc, char *argv[])
       return 1;
     }
 
-int result;
-    if (strcmp(ext, ".gz") == 0 || strcmp(ext, ".tar.gz") == 0 || strcmp(ext, ".tgz") == 0) {
-        result = unpack_archive(filepath, unpack_targz);
-    } else if (strcmp(ext, ".zip") == 0) {
-        result = unpack_archive(filepath, unpack_zip);
-    } else if (strcmp(ext, ".7z") == 0) {
-        result = unpack_archive(filepath, unpack_7z);
-    } else if (strcmp(ext, ".bz2") == 0 || strcmp(ext, ".tar.bz2") == 0 || strcmp(ext, ".tbz2") == 0) {
-        result = unpack_archive(filepath, unpack_tarbz2);
-    } else if (strcmp(ext, ".xz") == 0 || strcmp(ext, ".tar.xz") == 0 || strcmp(ext, ".txz") == 0) {
-        result = unpack_archive(filepath, unpack_tarxz);
-    } else if (strcmp(ext, ".bz2") == 0) {
-        result = unpack_archive(filepath, unpack_bz2);
-    } else if (strcmp(ext, ".xz") == 0) {
-        result = unpack_archive(filepath, unpack_xz);
-    } else {
-        fprintf(stderr, "Error: Unsupported file extension\n");
-        return 1;
+  int result;
+  if (strcmp (ext, ".gz") == 0 || strcmp (ext, ".tar.gz") == 0
+      || strcmp (ext, ".tgz") == 0)
+    {
+      result = unpack_archive (filepath, unpack_targz);
+    }
+
+  else if (strcmp (ext, ".bz2") == 0 || strcmp (ext, ".tar.bz2") == 0
+	   || strcmp (ext, ".tbz2") == 0)
+    {
+      result = unpack_archive (filepath, unpack_tarbz2);
+    }
+  else if (strcmp (ext, ".xz") == 0 || strcmp (ext, ".tar.xz") == 0
+	   || strcmp (ext, ".txz") == 0)
+    {
+      result = unpack_archive (filepath, unpack_tarxz);
+    }
+
+  else if (strcmp (ext, ".zip") == 0)
+    {
+      result = unpack_archive (filepath, unpack_zip);
+    }
+  else if (strcmp (ext, ".7z") == 0)
+    {
+      result = unpack_archive (filepath, unpack_7z);
+    }
+    else if (strcmp (ext, ".deb") == 0)
+    {
+      result = unpack_archive (filepath, unpack_deb);
+    }
+  else
+    {
+      fprintf (stderr, "Error: Unsupported file extension\n");
+      return 1;
     }
 
   return result;
