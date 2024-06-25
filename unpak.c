@@ -104,14 +104,14 @@ main (int argc, char *argv[])
     {
       result = unpack_archive (filepath, unpack_7z);
     }
-    else if (strcmp (ext, ".deb") == 0)
+  else if (strcmp (ext, ".deb") == 0)
     {
       result = unpack_archive (filepath, unpack_deb);
     }
 
-    else if (strcmp (ext, ".rpm") == 0)
+  else if (strcmp (ext, ".rpm") == 0)
     {
-      result = unpack_rpm(argv[1], "./");
+      result = unpack_rpm (argv[1], "./");
     }
 
   else

@@ -5,7 +5,7 @@
 void
 print_version ()
 {
-  printf ("%s\n", "1.24.0");
+  printf ("%s\n", "1.2.0");
 }
 
 void

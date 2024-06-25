@@ -1,4 +1,4 @@
-project('unpak', 'c', version: '1.24.0')
+project('unpak', 'c', version: '1.2.0')
 
 cc = meson.get_compiler('c')
 archive_dep = cc.find_library('archive', required: true)

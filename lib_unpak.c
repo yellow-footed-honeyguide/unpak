@@ -1,3 +1,14 @@
+#include <archive.h>
+#include <archive_entry.h>
+
+#include <rpm/rpmlib.h>
+#include <rpm/rpmts.h>
+#include <rpm/rpmio.h>
+#include <rpm/rpmpgp.h>
+#include <rpm/rpmdb.h>
+
+struct archive;
+
 /**
  * Initializes the archive structure for unpacking tar.gz files.
  *
@@ -116,68 +127,74 @@ unpack_deb (struct archive *a)
 
 
 /**
- * Initializes the archive structure for unpacking .rpm files.
+ * Unpacks an RPM file to a specified output directory.
  *
- * @param a The archive structure to initialize.
- * @return Always returns 0.
+ * This function takes an RPM file as input and extracts its contents to
+ * the specified output directory. It handles signature verification bypass
+ * and uses rpm2cpio and cpio for actual extraction.
+ *
+ * @param rpm_file The path to the RPM file to be unpacked.
+ * @param output_dir The directory where the contents will be extracted.
+ * @return 0 on success, -1 on failure.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <rpm/rpmlib.h>
-#include <rpm/rpmts.h>
-#include <rpm/rpmio.h>
-#include <rpm/rpmpgp.h>
-#include <rpm/rpmdb.h>
 
-int unpack_rpm(const char *rpm_file, const char *output_dir) {
-    rpmts ts = NULL;
-    FD_t fd = NULL;
-    Header hdr = NULL;
-    rpmRC rc;
-    int result = 0;
+int
+unpack_rpm (const char *rpm_file, const char *output_dir)
+{
+  rpmts ts = NULL;
+  FD_t fd = NULL;
+  Header hdr = NULL;
+  rpmRC rc;
+  int result = 0;
 
-    // Initialize RPM library
-    rpmReadConfigFiles(NULL, NULL);
-    ts = rpmtsCreate();
+  // Initialize RPM library
+  rpmReadConfigFiles (NULL, NULL);
+  ts = rpmtsCreate ();
 
-    // Disable signature checking
-    rpmtsSetVSFlags(ts, _RPMVSF_NOSIGNATURES);
+  // Disable signature checking
+  rpmtsSetVSFlags (ts, _RPMVSF_NOSIGNATURES);
 
-    // Open the RPM file
-    fd = Fopen(rpm_file, "r.ufdio");
-    if (fd == NULL) {
-        fprintf(stderr, "Failed to open RPM file: %s\n", rpm_file);
-        result = -1;
-        goto cleanup;
+  // Open the RPM file
+  fd = Fopen (rpm_file, "r.ufdio");
+  if (fd == NULL)
+    {
+      fprintf (stderr, "Failed to open RPM file: %s\n", rpm_file);
+      result = -1;
+      goto cleanup;
     }
 
-    // Read the RPM header
-    rc = rpmReadPackageFile(ts, fd, rpm_file, &hdr);
-    if (rc != RPMRC_OK) {
-        fprintf(stderr, "Failed to read RPM header (error code: %d)\n", rc);
-        result = -1;
-        goto cleanup;
+  // Read the RPM header
+  rc = rpmReadPackageFile (ts, fd, rpm_file, &hdr);
+  if (rc != RPMRC_OK)
+    {
+      fprintf (stderr, "Failed to read RPM header (error code: %d)\n", rc);
+      result = -1;
+      goto cleanup;
     }
 
-    // Create the output directory
-    char cmd[1024];
-    snprintf(cmd, sizeof(cmd), "mkdir -p %s", output_dir);
-    system(cmd);
+  // Create the output directory
+  char cmd[1024];
+  snprintf (cmd, sizeof (cmd), "mkdir -p %s", output_dir);
+  system (cmd);
 
-    // Extract the contents
-    snprintf(cmd, sizeof(cmd), "rpm2cpio %s | (cd %s && cpio -idmv)", rpm_file, output_dir);
-    if (system(cmd) != 0) {
-        fprintf(stderr, "Failed to extract RPM contents\n");
-        result = -1;
-        goto cleanup;
+  // Extract the contents
+  snprintf (cmd, sizeof (cmd), "rpm2cpio %s | (cd %s && cpio -idmv)",
+	    rpm_file, output_dir);
+  if (system (cmd) != 0)
+    {
+      fprintf (stderr, "Failed to extract RPM contents\n");
+      result = -1;
+      goto cleanup;
     }
 
-    printf("RPM unpacked successfully to: %s\n", output_dir);
+  printf ("RPM unpacked successfully to: %s\n", output_dir);
 
 cleanup:
-    if (hdr) headerFree(hdr);
-    if (fd) Fclose(fd);
-    if (ts) rpmtsFree(ts);
-    return result;
+  if (hdr)
+    headerFree (hdr);
+  if (fd)
+    Fclose (fd);
+  if (ts)
+    rpmtsFree (ts);
+  return result;
 }

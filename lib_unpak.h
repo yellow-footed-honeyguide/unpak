@@ -18,4 +18,6 @@ int unpack_xz (struct archive *a);
 int unpack_bz2 (struct archive *a);
 
 int unpack_deb (struct archive *a);
+
+int unpack_rpm (const char *rpm_file, const char *output_dir);
 #endif
