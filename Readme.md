@@ -15,7 +15,8 @@ The unpak can unpack files from the following archives:
 - `.tar.xz`   
 - `.zip`
 - `.7z` 
-- `.deb` 
+- `.deb`
+- `.rpm`
 
 The unpak can decompress:
 - `.gz`   
@@ -39,6 +40,8 @@ Whether you're on Linux, macOS, or BSD, unpak adapts seamlessly to your Unix-lik
 
 ### Dependencies
 - `libarchive`
+- `librpm`  
+- `librpmio`
 
 ### Installing
 To install unpak, follow these steps:
@@ -58,9 +61,11 @@ or
 ### Executing program
 To extract an archive, simply run the `unpak` executable with the archive file as an argument:
 
+```  
 unpak archive.tar.gz
 unpak archive.zip
-unpak archive.7z
+unpak archive.7z  
+```
 
 unpak will automatically detect the archive format and extract its contents to the current directory.
 
