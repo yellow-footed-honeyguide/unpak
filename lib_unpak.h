@@ -7,9 +7,7 @@ int unpack_zip (struct archive *a);
 
 int unpack_7z (struct archive *a);
 
-
 int unpack_tarbz2 (struct archive *a);
-
 
 int unpack_tarxz (struct archive *a);
 

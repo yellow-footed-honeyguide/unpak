@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include <getopt.h>
 
+// If VERSION is not defined, use a default value
+#ifndef VERSION
+#define VERSION "unknown"
+#endif
+
 void
 print_version ()
 {
-  printf ("%s\n", "1.2.0");
+  printf ("%s\n", VERSION);
 }
 
 void
