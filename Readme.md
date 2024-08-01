@@ -53,8 +53,8 @@ cd build
 meson ..
 ninja
 ```
-or 
-```sudo ninja install``` (if you want to add unpak to executable path)
+Now you can install unpak to /usr/local/bin/
+```sudo ninja install```
 
 
 
